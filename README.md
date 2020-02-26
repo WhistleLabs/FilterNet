@@ -2,7 +2,7 @@
 # FilterNet: A many-to-many deep learning architecture for time series classification
 
 This repository contains code to reproduce the results and figures in the paper: 
-*FilterNet: A many-to-many deep learning architecture for time series classification*.
+*[FilterNet: A many-to-many deep learning architecture for time series classification](https://www.preprints.org/manuscript/202002.0318/v1)*.
 
 ## Setup
 The easiest way to run this software is via the Anaconda Python distribution.
