@@ -1,6 +1,8 @@
 
 # FilterNet: A many-to-many deep learning architecture for time series classification
 
+[![DOI](https://zenodo.org/badge/242397153.svg)](https://zenodo.org/badge/latestdoi/242397153)
+
 This repository contains code to reproduce the results and figures in the paper: 
 *[FilterNet: A many-to-many deep learning architecture for time series classification](https://www.preprints.org/manuscript/202002.0318/v1)*.
 
