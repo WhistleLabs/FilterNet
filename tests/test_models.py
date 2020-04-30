@@ -60,7 +60,7 @@ def test_transform_output_m2m(x_y_dict):
         assert y_out.shape == (
             N,
             num_output_classes,
-            x_y_dict["win_len"] - 2 * net.padding_lost_per_side,
+            1 #x_y_dict["win_len"] - 2 * net.padding_lost_per_side,
         )
     y_comps = net.transform_targets(ys)
     for y_comp, y_out in zip(y_comps, y_outs):
