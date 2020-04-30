@@ -13,10 +13,10 @@ import torch.optim
 import traits.api as t
 from torch.utils.data import DataLoader, TensorDataset
 
-import models
-from datasets import sliding_window_x_y
-from models.reference_architectures import get_ref_arch
-from mputil import Timer
+from filternet import models
+from filternet.datasets import sliding_window_x_y
+from filternet.models.reference_architectures import get_ref_arch
+from filternet.mputil import Timer
 
 
 class EpochMetrics(t.HasStrictTraits):
@@ -184,13 +184,13 @@ class Trainer(t.HasStrictTraits):
     def _get_dl(self, s):
 
         if self.dataset == "opportunity":
-            from datasets.opportunity import get_x_y_contig
+            from filternet.datasets.opportunity import get_x_y_contig
         elif self.dataset == "smartphone_hapt":
-            from datasets.smartphone_hapt import get_x_y_contig
+            from filternet.datasets.smartphone_hapt import get_x_y_contig
         elif self.dataset == "har":
-            from datasets.har import get_x_y_contig
+            from filternet.datasets.har import get_x_y_contig
         elif self.dataset == "intention_recognition":
-            from datasets.intention_recognition import get_x_y_contig
+            from filternet.datasets.intention_recognition import get_x_y_contig
         else:
             raise ValueError(f"Unknown dataset {self.dataset}")
 

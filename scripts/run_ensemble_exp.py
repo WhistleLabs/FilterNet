@@ -9,8 +9,8 @@ import sys
 
 sys.path.insert(0, ".")
 
-from training.evalmodel import *
-from training.ensemble_train import EnsembleTrainer
+from filternet.training.evalmodel import *
+from filternet.training.ensemble_train import EnsembleTrainer
 
 NAME = "ensembles_3"  # unique name for this particular run
 MAX_EPOCHS = 100

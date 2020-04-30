@@ -4,8 +4,8 @@ import os
 
 import pytest
 
-from datasets import har as ds
-from datasets import sliding_window_x_y
+from filternet.datasets import har as ds
+from filternet.datasets import sliding_window_x_y
 
 
 @pytest.fixture

@@ -15,9 +15,9 @@ import traits.api as t
 from scipy.special import softmax
 from torch.utils.data import DataLoader
 
-import models as mo
-from mputil import Timer
-from training.train import Trainer
+from filternet import models as mo
+from filternet.mputil import Timer
+from filternet.training.train import Trainer
 
 
 class ClassWardMetrics(t.HasStrictTraits):

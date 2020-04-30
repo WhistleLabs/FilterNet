@@ -4,8 +4,8 @@ import os
 
 import pytest
 
-from datasets import sliding_window_x_y
-from datasets import smartphone_hapt as ds
+from filternet.datasets import sliding_window_x_y
+from filternet.datasets import smartphone_hapt as ds
 
 
 @pytest.fixture
