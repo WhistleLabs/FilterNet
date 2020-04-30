@@ -9,12 +9,25 @@ This repository contains code to reproduce the results and figures in the paper:
 ## Setup
 The easiest way to run this software is via the Anaconda Python distribution.
 
+1. Install Anaconda
+2. Run `conda env create -f environment.yaml`.  That will install the latest versions of the packages
+   that we require. OR, if you want to use the *exact* packages that we last tested with (which might
+   be obsolete by the time you run this), do `conda env create -f environment-pinned.yaml`
+3. Enable the `filternet` environment, like, `source activate filternet`
+4. Install filternet so it is importable, by running `pip install -e .` in the same 
+   directory as setup.py
+
 ## Running tests
 In the root dir of this repo:
 
 ```
 pytest tests
 ```
+
+This will be *really* slow the first time because it has to download and pre-process 
+several large AR datasets.
+
+Subsequent test runs will probably still be slow, but... less slow.
 
 ## Reproducing Results
 

@@ -1,0 +1,31 @@
+name: filternet
+channels:
+  - pytorch
+  - defaults
+
+dependencies:
+  - anaconda == 2019.10  # unpin this for latest packages
+  - ipython
+  - jupyter
+  - matplotlib
+  - numpy
+  - pandas
+  - pip
+  - pytest
+  - pytorch == 1.0.1
+  - scikit-learn
+  - scipy
+  - seaborn
+  - traits
+  - pip:
+      - hyperopt
+      - pyEDFlib
+      - ray == 0.8.4
+      - tabulate
+      - torchsummary
+      - torchsummaryX
+      - typing
+      - ward-metrics == 0.9.5
+
+
+

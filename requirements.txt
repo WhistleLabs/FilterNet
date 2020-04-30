@@ -1,6 +1,0 @@
-torchsummary
-torchsummaryX
-hyperopt
-ray
-ward-metrics
-pyEDFlib
