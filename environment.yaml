@@ -4,7 +4,7 @@ channels:
   - defaults
 
 dependencies:
-  - anaconda == 2019.10  # unpin this for latest packages
+  - anaconda == 2019.10  # unpin this for latest packages; this pins lots of versions.
   - ipython
   - jupyter
   - matplotlib
@@ -12,7 +12,7 @@ dependencies:
   - pandas
   - pip
   - pytest
-  - pytorch == 1.0.1
+  - pytorch == 1.0.1 # unpin for latest pytorch
   - scikit-learn
   - scipy
   - seaborn
@@ -20,12 +20,12 @@ dependencies:
   - pip:
       - hyperopt
       - pyEDFlib
-      - ray == 0.8.4
+      - ray == 0.8.4 # you could unpin, but api seems unstable
       - tabulate
       - torchsummary
       - torchsummaryX
       - typing
-      - ward-metrics == 0.9.5
+      - ward-metrics == 0.9.5 # probably doesn't need to be pinned
 
 
 
