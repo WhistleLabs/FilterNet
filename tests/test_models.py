@@ -3,8 +3,8 @@
 import pytest
 import torch
 
-import modeling_paper.models as mo
-from datasets import opportunity as opp, sliding_window_x_y
+import filternet.models as mo
+from filternet.datasets import opportunity as opp, sliding_window_x_y
 
 
 @pytest.fixture
@@ -36,7 +36,7 @@ def test_make_model():
 
 
 def test_transform_output_m2o(x_y_dict):
-    net = mo.DeepConvLSTM(output_type="many_to_one_takelast", scale=(1.0 / 8))
+    net = mo.DeepConvLSTM(scale=(1.0 / 8))
     N = 10
     X = x_y_dict["X_train"][:N]
     ys = [y[:N] for y in x_y_dict["ys_train"]]
@@ -50,7 +50,7 @@ def test_transform_output_m2o(x_y_dict):
 
 
 def test_transform_output_m2m(x_y_dict):
-    net = mo.DeepConvLSTM(output_type="many_to_many", scale=(1.0 / 8))
+    net = mo.DeepConvLSTM(scale=(1.0 / 8))
     N = 10
     X = x_y_dict["X_train"][:N]
     ys = [y[:N] for y in x_y_dict["ys_train"]]

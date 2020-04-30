@@ -13,8 +13,8 @@ import sys
 
 sys.path.insert(0, ".")
 
-from models.reference_architectures import ref_archs
-from training.evalmodel import *
+from filternet.models.reference_architectures import ref_archs
+from filternet.training.evalmodel import *
 
 NAME = "base_configs_7"  # unique name for this particular run
 MAX_EPOCHS = 100
@@ -25,7 +25,7 @@ saved_model_glob = (
 
 
 def do_run():
-    for i in range(1, NUM_REPEATS):
+    for i in range(0, NUM_REPEATS):
         # Do the FilterNet reference architectures
         for ref_arch in ref_archs.keys():
             name = f"{NAME}_{ref_arch}_{i}"

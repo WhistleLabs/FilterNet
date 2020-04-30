@@ -11,9 +11,9 @@ import torch.optim
 import traits.api as t
 from torch.utils.data import DataLoader, TensorDataset
 
-import models
-from training.evalmodel import EvalModel
-from training.train import Trainer
+from filternet import models
+from filternet.training.evalmodel import EvalModel
+from filternet.training.train import Trainer
 
 
 class EnsembleTrainer(t.HasStrictTraits):

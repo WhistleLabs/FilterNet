@@ -5,8 +5,8 @@ import os
 import pytest
 import torch
 
-from datasets import opportunity as opp, sliding_window_x_y
-from training.trainable import MPTrainable
+from filternet.datasets import opportunity as opp, sliding_window_x_y
+from filternet.training.trainable import MPTrainable
 
 
 @pytest.fixture

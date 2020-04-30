@@ -10,9 +10,9 @@ import sys
 
 sys.path.insert(0, ".")
 
-from models.reference_architectures import ref_archs
-from training.evalmodel import *
-from training.ensemble_train import EnsembleTrainer
+from filternet.models.reference_architectures import ref_archs
+from filternet.training.evalmodel import *
+from filternet.training.ensemble_train import EnsembleTrainer
 
 NAME = "mm_base_configs_2"  # unique name for this particular run
 MAX_EPOCHS = 100  # 0

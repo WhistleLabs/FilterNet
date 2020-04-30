@@ -2,8 +2,8 @@
 
 import ray.tune
 
-from models.reference_architectures import get_ref_arch
-from training.train import Trainer
+from filternet.models.reference_architectures import get_ref_arch
+from filternet.training.train import Trainer
 
 
 class MPTrainable(ray.tune.Trainable):

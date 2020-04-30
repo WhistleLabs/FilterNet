@@ -4,8 +4,8 @@ import os
 
 import pytest
 
-from datasets import intention_recognition as ds
-from datasets import sliding_window_x_y
+from filternet.datasets import intention_recognition as ds
+from filternet.datasets import sliding_window_x_y
 
 
 @pytest.fixture
