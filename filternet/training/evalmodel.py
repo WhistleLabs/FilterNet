@@ -108,7 +108,11 @@ class EvalModel(t.HasStrictTraits):
             dl = DataLoader(dl.dataset, batch_size=self.eval_batch_size, shuffle=False)
         #
         #     # Xc, yc = data.get_x_y_contig('test')
-        X, *ys = dl.dataset.tensors
+        # the original line
+        #X, *ys = dl.dataset.tensors
+        dtiter=iter(dl)
+        X, *ys =dtiter.next()
+         
         # X: [N, input_chans, win_len]
         step = int(X.shape[2] / 2)
         assert torch.equal(X[0, :, step], X[1, :, 0])
@@ -220,7 +224,11 @@ class EvalModel(t.HasStrictTraits):
             self.targets = self.targets[not_null_mask]
             self.targets -= 1
 
-        self.n_samples_in = np.prod(dl.dataset.tensors[1].shape)
+        dtiter=iter(dl)
+        X2, *ys2 =dtiter.next()
+        # the origina version
+        #self.n_samples_in = np.prod(dl.dataset.tensors[1].shape)
+        self.n_samples_in = np.prod(X2[1].shape)
         self.n_samples_out = len(self.outputs)
         self.infer_samples_per_s = self.n_samples_in / self.infer_time_s_wall
         self.run_time_s_cpu = tr.interval_cpu
