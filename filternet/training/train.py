@@ -11,7 +11,7 @@ import torch
 import torch.nn.functional as F
 import torch.optim
 import traits.api as t
-from torch.utils.data import DataLoader, TensorDataset
+from torch.utils.data import DataLoader, TensorDataset, Dataset
 
 from filternet import models
 from filternet.datasets import sliding_window_x_y
@@ -26,7 +26,7 @@ class EpochMetrics(t.HasStrictTraits):
 
 
 class EpochRecord(t.HasStrictTraits):
-    epoch: int = t.Int()
+    epoch: int = t.Int() # t from trais.api is a way of type defintion which makes the compiler sensitive to wrong type assignment 
     train: EpochMetrics = t.Instance(EpochMetrics)
     val: EpochMetrics = t.Instance(EpochMetrics)
 
@@ -67,14 +67,55 @@ class TrainState(t.HasStrictTraits):
         )
 
 
+class FilternetDataset(Dataset):
+    def __init__(self, X, y, win_len=128, step=100, transform=None, target_transform=None):
+        self.target = y[0]
+        self.Xdata = X
+        self.win_len = win_len
+        self.step = step
+        self.transform = transform
+        self.target_transform = target_transform
+
+    def __len__(self):
+        return int(len(self.target) / self.step) - 1
+
+    def __getitem__(self, idx):
+        #print("index of sample: ", idx)
+        
+        data_i=np.array(self.Xdata[int(idx*self.step) : int(idx*self.step) + self.win_len]).transpose([1, 0]).astype(np.float32)
+        target_i=np.array(self.target[int(idx*self.step) : int(idx*self.step) + self.win_len]).astype(np.long) 
+        
+        if self.transform:
+            data_i = self.transform(data_i)
+        if self.target_transform:
+            target_i = self.target_transform(target_i)
+        return data_i, target_i
+ 
+class TrnsDt(object):
+    """Convert ndarrays in sample to Tensors."""
+
+    def __call__(self, sample):
+        
+        pt_sample =  torch.Tensor(sample)
+              
+        return pt_sample
+class TrnsDt_Trgt(object):
+    """Convert ndarrays in sample to Tensors."""
+
+    def __call__(self, sample):
+        
+        pt_sample =  torch.Tensor(sample).long()
+              
+        return pt_sample
+
 class Trainer(t.HasStrictTraits):
-    model: models.BaseNet = t.Instance(torch.nn.Module, transient=True)
+    model: models.BaseNet = t.Instance(torch.nn.Module, transient=True) # t from trais.api is a way of type defintion which makes the compiler sensitive to wrong type assignment 
 
     def _model_default(self):
 
         # Merge 'base config' (if requested) and any overrides in 'model_config'
         if self.base_config:
-            model_config = get_ref_arch(self.base_config)
+            model_config = get_ref_arch(self.base_config) # from C:\Users\afsamani\OneDrive - Aalborg Universitet\WrokResults\FiltNet\FilterNet\filternet\models\ reference_architectures
         else:
             model_config = {}
         if self.model_config:
@@ -99,7 +140,7 @@ class Trainer(t.HasStrictTraits):
     lr_exp: float = t.Float(-3.0)
     batch_size: int = t.Int()
     win_len: int = t.Int(512)
-    n_samples_per_batch: int = t.Int(5000)
+    n_samples_per_batch: int = t.Int(512*16)
     train_step: int = t.Int(16)
     seed: int = t.Int()
     decimation: int = t.Int(1)
@@ -207,25 +248,19 @@ class Trainer(t.HasStrictTraits):
             # small as we want to get more windows; we'll only run len(Sc)/win_len of them in each training
             # epoch.
             self.epoch_iters = int(len(Xc) / self.decimation)
-            X, ys = sliding_window_x_y(
-                Xc, ycs, win_len=self.win_len, step=self.train_step, shuffle=False
-            )
+            
+            ds = FilternetDataset(Xc, ycs, win_len=self.win_len, step=int(self.win_len / 2), transform = TrnsDt(), target_transform = TrnsDt_Trgt())
             # Set the overall data spec using the training set,
             #  and modify later if more info is needed.
             self.data_spec = data_spec
         else:
             # Val and test data are not shuffled.
             # Each point is inferred ~twice b/c step = win_len/2
-            X, ys = sliding_window_x_y(
-                Xc,
-                ycs,
-                win_len=self.win_len,
-                step=int(self.win_len / 2),
-                shuffle=False,  # Cannot be true with windows
-            )
+                       
+            ds = FilternetDataset(Xc, ycs, win_len = self.win_len, step=int(self.win_len / 2), transform = TrnsDt(), target_transform = TrnsDt_Trgt())
 
         dl = DataLoader(
-            TensorDataset(torch.Tensor(X), *[torch.Tensor(y).long() for y in ys]),
+            ds,
             batch_size=self.batch_size,
             shuffle=True if s == "train" else False,
         )
